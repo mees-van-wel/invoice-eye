@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; // Set to the height you prefer or make it responsive
+}
+
+.preview {  
+    position: relative;
+    width: 800px; // Set to the width you prefer or make it responsive
+    max-height: 100%; // Set to the height you prefer or make it responsive
+    overflow-y: auto;
+}

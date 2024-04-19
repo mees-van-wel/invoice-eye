@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import styles from "./layout.module.scss";
-import clsx from "clsx";
+import { Providers } from "@/components/providers";
+
+import "./globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,16 +17,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={clsx([inter.className, styles.root])}>
-        <ThemeProvider
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <Providers
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-        </ThemeProvider>
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );
