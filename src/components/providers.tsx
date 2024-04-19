@@ -4,7 +4,7 @@ import { RecoilRoot, atom, useRecoilState } from "recoil";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { ThemeProviderProps } from "next-themes/dist/types";
 import type { DocumentFieldOutput } from "@azure-rest/ai-document-intelligence";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { deleteOldFiles } from "@/app/actions";
 import superjson from "superjson";
 
@@ -28,7 +28,27 @@ export const hoverState = atom<string | null>({
   default: null,
 });
 
+const pw = "v5>zE";
+
 export function Providers({ children, ...props }: ThemeProviderProps) {
+  const hasRun = useRef(false);
+  const [authtenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+    const storedAuthtenticated = localStorage.getItem("authtenticated");
+    if (storedAuthtenticated === pw) return setAuthenticated(true);
+
+    const password = prompt("Enter the password");
+    if (password !== pw) return alert("Invalid password");
+
+    localStorage.setItem("authtenticated", pw);
+    setAuthenticated(true);
+  }, []);
+
+  if (!authtenticated) return null;
+
   return (
     <RecoilRoot>
       <NextThemesProvider {...props}>
