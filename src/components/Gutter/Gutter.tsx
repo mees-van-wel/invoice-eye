@@ -97,6 +97,7 @@ export const Gutter = () => {
       if (document?.fields) {
         await uploadFile(item.fileId, base64Source);
 
+        // @ts-ignore
         setFiles((currentFiles) => {
           const current = currentFiles[item.id];
 
@@ -181,6 +182,7 @@ export const Gutter = () => {
             {}
           )
         )
+          // @ts-ignore
           .sort((a, b) => b[0] - a[0])
           .map(([hour, items]) => (
             <div key={hour}>
@@ -190,63 +192,65 @@ export const Gutter = () => {
                 </p>
                 <span className={styles.hourLine} />
               </div>
-              {Object.values(items)
-                ?.sort((a, b) => b.date.getTime() - a.date.getTime())
-                .map(({ id, date, fileName, fields }) => (
-                  <Card
-                    key={id}
-                    className={clsx("w-[300px]", styles.card)}
-                    style={{
-                      padding: "1rem",
-                    }}
-                  >
-                    <CardHeader
+              <div>
+                {Object.values(items)
+                  ?.sort((a, b) => b.date.getTime() - a.date.getTime())
+                  .map(({ id, date, fileName, fields }) => (
+                    <Card
+                      key={id}
+                      className={clsx("w-[300px]", styles.card)}
                       style={{
-                        padding: 0,
+                        padding: "1rem",
                       }}
                     >
-                      <Group>
-                        <div>
-                          <CardTitle
-                            style={{
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              maxWidth: "140px",
-                            }}
-                          >
-                            {fileName}
-                          </CardTitle>
-                          <CardDescription>
-                            {dayjs(date).format("YYYY-MM-DD HH:mm")}
-                          </CardDescription>
-                        </div>
-                        <Link href={`/${id}`}>
-                          <Button
-                            variant={
-                              pathname.includes(id) ? undefined : "secondary"
-                            }
-                            disabled={!fields}
-                          >
-                            <Group gap="0.5rem">
-                              {fields ? (
-                                <>
-                                  <EyeOpenIcon />
-                                  <p>View</p>
-                                </>
-                              ) : (
-                                <>
-                                  <SymbolIcon className="animate-spin" />
-                                  <p>Loading...</p>
-                                </>
-                              )}
-                            </Group>
-                          </Button>
-                        </Link>
-                      </Group>
-                    </CardHeader>
-                  </Card>
-                ))}
+                      <CardHeader
+                        style={{
+                          padding: 0,
+                        }}
+                      >
+                        <Group>
+                          <div>
+                            <CardTitle
+                              style={{
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                maxWidth: "140px",
+                              }}
+                            >
+                              {fileName}
+                            </CardTitle>
+                            <CardDescription>
+                              {dayjs(date).format("YYYY-MM-DD HH:mm")}
+                            </CardDescription>
+                          </div>
+                          <Link href={`/${id}`}>
+                            <Button
+                              variant={
+                                pathname.includes(id) ? undefined : "secondary"
+                              }
+                              disabled={!fields}
+                            >
+                              <Group gap="0.5rem">
+                                {fields ? (
+                                  <>
+                                    <EyeOpenIcon />
+                                    <p>View</p>
+                                  </>
+                                ) : (
+                                  <>
+                                    <SymbolIcon className="animate-spin" />
+                                    <p>Loading...</p>
+                                  </>
+                                )}
+                              </Group>
+                            </Button>
+                          </Link>
+                        </Group>
+                      </CardHeader>
+                    </Card>
+                  ))}
+              </div>
             </div>
           ))}
       </div>

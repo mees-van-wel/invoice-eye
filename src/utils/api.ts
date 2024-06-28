@@ -1,7 +1,6 @@
 import DocumentIntelligence from "@azure-rest/ai-document-intelligence";
 
-const endpoint = process.env.NEXT_PUBLIC_DI_ENDPOINT;
-if (!endpoint) throw new Error("Missing NEXT_PUBLIC_DI_ENDPOINT in .env");
+const endpoint = "https://westeurope.api.cognitive.microsoft.com";
 
 const key = process.env.NEXT_PUBLIC_DI_KEY;
 if (!key) throw new Error("Missing NEXT_PUBLIC_DI_KEY in .env");
